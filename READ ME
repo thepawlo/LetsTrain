@@ -1,2 +1,4 @@
 #Let's Train
 #Web application where people can find frinds for workout together
+
+#After download please update file persitence.xml.dist with your private data to get connection with database!
