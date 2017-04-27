@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{sportEventMB.cleanupOldEvents}"/>
+    </f:metadata>
+</head>
+<h:body>
+    <ui:composition template="/pages/templates/master.xhtml">
+        <ui:define name="divMain">
+            <h:form enctype="multipart/form-data" id="searchSportEventForm" margin="20px">
+                <h2>#{bundle.searchSportEvent}:</h2>
+                <br/>
+                <h:panelGrid id="searchSportEventGrid" columns="2" cellspacing="10">
+                    <h:outputText value="#{bundle.sportEventCategory}:"/>
+                    <p:selectOneMenu value="#{sportEventMB.searchedEvent.sportCategory}"
+                                     converter="#{sportCategoryConverter}">
+                        <f:selectItems value="#{sportCategoryMB.allSportsCategories}" var="sc" itemValue="#{sc}"
+                                       itemLabel="#{sc.name}"/>
+                    </p:selectOneMenu>
+                    <h:outputText value="#{bundle.sportEventCity}:"/>
+                    <p:selectOneMenu value="#{sportEventMB.searchedEvent.city}" converter="#{cityConverter}">
+                        <f:selectItems value="#{cityMB.allCities}" var="city" itemValue="#{city}"
+                                       itemLabel="#{city.name}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <p:commandButton value="#{bundle.search}" icon="ui-icon-search" action="#{sportEventMB.searchEvents()}"
+                                 ajax="false" update=":messageGrowl"/>
+            </h:form>
+            <h:form enctype="multipart/form-data" id="resultsSportEventForm">
+                <br/>
+                <p:dataTable id="resultsSportsEventTable" value="#{sportEventMB.searchedEventsList}" var="sportEvent"
+                             emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,15,20">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventTitle}"/>
+                        </f:facet>
+                        <h:outputText value="#{sportEvent.title}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventCity}"/>
+                        </f:facet>
+                        <h:outputText value="#{sportEvent.city.name}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventCategory}"/>
+                        </f:facet>
+                        <h:outputText value="#{sportEvent.sportCategory.name}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventDate}"/>
+                        </f:facet>
+                        <h:outputText value="#{sportEvent.date}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventParticipants}"/>
+                        </f:facet>
+                        <h:outputText value="#{sportEvent.participants.size()}/#{sportEvent.amountOfParticipants}"/>
+                    </p:column>
+                    <p:column>
+                        <p:spacer width="10px"/>
+                        <p:commandButton value="#{bundle.details}" icon="ui-icon-arrowstop-1-e"
+                                         action="#{sportEventMB.showDetails()}" ajax="false">
+                            <f:setPropertyActionListener target="#{sportEventMB.sportEvent}" value="#{sportEvent}"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

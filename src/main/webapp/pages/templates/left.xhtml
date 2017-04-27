@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+    <ui:composition>
+        <h:form>
+            #{bundle.menu}
+            <p:growl autoUpdate="true"/>
+            <p:panelMenu style="width:240px; font-size: 20px; align-content: center">
+                <p:submenu label="#{bundle.myAccount}" rendered="#{userMB.admin or userMB.defaultUser}">
+                    <p:menuitem value="#{bundle.myAccount}" icon="ui-icon-arrowstop-1-e"
+                                outcome="/pages/protected/user/myAccount.xhtml" ajax="false"/>
+                    <p:menuitem value="#{bundle.mySportEvents}" icon="ui-icon-arrowstop-1-e"
+                                outcome="/pages/protected/user/sportEvents/userSportEvents.xhtml" ajax="false"/>
+                </p:submenu>
+                <p:submenu label="#{bundle.sportEvents}" rendered="#{userMB.admin or userMB.defaultUser}">
+                    <p:menuitem value="#{bundle.createSportEvent}" icon="ui-icon-arrowstop-1-e"
+                                outcome="/pages/protected/user/sportEvents/createSportEvent.xhtml" ajax="false"/>
+                    <p:menuitem value="#{bundle.searchSportEvent}" icon="ui-icon-arrowstop-1-e"
+                                outcome="/pages/protected/user/sportEvents/searchSportEvent.xhtml" ajax="false"/>
+                </p:submenu>
+                <p:submenu label="#{bundle.adminPanel}" rendered="#{userMB.admin}">
+                    <p:menuitem value="#{bundle.manageSportCategories}" icon="ui-icon-arrowstop-1-e"
+                                outcome="/pages/protected/admin/sportCategories/manageSportCategories.xhtml" ajax="false"/>
+                    <p:menuitem value="#{bundle.manageCities}" icon="ui-icon-arrowstop-1-e"
+                                outcome="/pages/protected/admin/cities/manageCities.xhtml" ajax="false"/>
+                    <p:menuitem value="#{bundle.manageSportEvents}" icon="ui-icon-arrowstop-1-e"
+                                outcome="/pages/protected/admin/sportEvents/manageSportEvents.xhtml" ajax="false"/>
+                    <p:menuitem value="#{bundle.manageUsers}" icon="ui-icon-arrowstop-1-e"
+                                outcome="/pages/protected/admin/users/manageUsers.xhtml" ajax="false"/>
+                </p:submenu>
+                <p:submenu label="#{bundle.logOut}" rendered="#{userMB.admin or userMB.defaultUser}">
+                    <p:menuitem value="#{bundle.logOut}" icon="ui-icon-cancel"
+                                action="#{userMB.logOut()}" ajax="false"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:composition>
+</h:body>
+</html>

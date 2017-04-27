@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+    <title>#{bundle.userSportEvents}</title>
+</head>
+<h:body>
+    <ui:composition template="/pages/templates/master.xhtml">
+        <ui:define name="divMain">
+            <h:form enctype="multipart/form-data" id="detailsOfSportEventForm">
+                #{bundle.detailsOfSportEvent}:<h2><h:outputText value="#{sportEventMB.sportEventDetail.title}"/></h2>
+                <br/>
+                <h:panelGrid id="detailsOfSportEventGrid" columns="2" cellspacing="10">
+                    <h:outputText value="#{bundle.sportEventCity}:"/>
+                    <h:outputText value="#{sportEventMB.sportEventDetail.city.name}"/>
+                    <h:outputText value="#{bundle.sportEventCategory}:"/>
+                    <h:outputText value="#{sportEventMB.sportEventDetail.sportCategory.name}"/>
+                    <h:outputText value="#{bundle.sportEventDate}:"/>
+                    <h:outputText value="#{sportEventMB.sportEventDetail.date}"/>
+                    <h:outputText value="#{bundle.sportEventOrganizer}:"/>
+                    <p:commandLink id="organizer" actionListener="#{userManagerMB.showUser()}">
+                        <h:outputText value="#{sportEventMB.sportEventDetail.organizer.name}:"/>
+                    </p:commandLink>
+                    <h:outputText value="#{bundle.sportEventParticipants}:"/>
+                    <h:outputText
+                            value="#{sportEventMB.sportEventDetail.participants.size()}/
+                            #{sportEventMB.sportEventDetail.amountOfParticipants}"/>
+                    <h:outputText value="#{bundle.details}:"/>
+                    <h:outputText value="#{sportEventMB.sportEventDetail.description}"/>
+                    <h:outputText value="#{bundle.sportEventParticipantsList}:"/>
+                    <p:dataList value="#{sportEventMB.sportEventDetail.participants}" var="participant" type="ordered"
+                                style="size:12px">
+                        #{participant.name}, #{bundle.age}: #{participant.userDetails.age}
+                    </p:dataList>
+                </h:panelGrid>
+                <p:commandButton value="#{bundle.join}!" icon="ui-icon-plus"
+                                 actionListener="#{sportEventMB.resetChosenEvent()}"
+                                 onclick="confirmationDialogWidget.show();" update=":confirmationDialogForm"
+                                 disabled="#{sportEventMB.checkUser()}">
+                    <f:setPropertyActionListener target="#{sportEventMB.chosenEvent}"
+                                                 value="#{sportEventMB.sportEventDetail}"/>
+                </p:commandButton>
+            </h:form>
+            <ui:include src="/pages/protected/user/sportEvents/joinEventConfirmation.xhtml">
+            </ui:include>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

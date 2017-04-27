@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+    <title>#{bundle.userSportEvents}</title>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{sportEventMB.cleanupOldEvents}"/>
+    </f:metadata>
+</head>
+<h:body>
+    <ui:composition template="/pages/templates/master.xhtml">
+        <ui:define name="divMain">
+            <br/>
+            <h3>#{bundle.iAmHost}:</h3>
+            <h:form enctype="multipart/form-data" id="organisedEventsForm">
+                <br/>
+                <p:dataTable id="organisedEventsTable" value="#{sportEventMB.allOrganisedEvents}" var="organisedEvent"
+                             emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                             {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,15,20">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventTitle}"/>
+                        </f:facet>
+                        <h:outputText value="#{organisedEvent.title}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventCity}"/>
+                        </f:facet>
+                        <h:outputText value="#{organisedEvent.city.name}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventCategory}"/>
+                        </f:facet>
+                        <h:outputText value="#{organisedEvent.sportCategory.name}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventDate}"/>
+                        </f:facet>
+                        <h:outputText value="#{organisedEvent.date}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventParticipants}"/>
+                        </f:facet>
+                        <h:outputText value="#{organisedEvent.participants.size()}/#{organisedEvent.amountOfParticipants}"/>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="#{bundle.details} / #{bundle.editEvent}" icon="ui-icon-pencil"
+                                         action="#{sportEventMB.editSportEvent}" ajax="false">
+                            <f:setPropertyActionListener target="#{sportEventMB.sportEvent}" value="#{organisedEvent}"/>
+                        </p:commandButton>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="#{bundle.delete}" icon="ui-icon-trash"
+                                         onclick="sportEventDeleteDialogWidget.show();"
+                                         actionListener="#{sportEventMB.resetSportEvent}"
+                                         update=":sportEventDeleteDialogForm">
+                            <f:setPropertyActionListener target="#{sportEventMB.sportEvent}" value="#{organisedEvent}"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <ui:include src="/pages/protected/user/sportEvents/deleteSportEvent.xhtml"/>
+            <br/>
+            <br/>
+            <h3>#{bundle.iAmParticipant}:</h3>
+            <h:form enctype="multipart/form-data" id="participateEventForm">
+                <br/>
+                <p:dataTable id="participateEventTable" value="#{sportEventMB.allParticipateEvents}"
+                             var="participateEvent"
+                             emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                             {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,15,20">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventTitle}"/>
+                        </f:facet>
+                        <h:outputText value="#{participateEvent.title}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventCity}"/>
+                        </f:facet>
+                        <h:outputText value="#{participateEvent.city.name}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventCategory}"/>
+                        </f:facet>
+                        <h:outputText value="#{participateEvent.sportCategory.name}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventDate}"/>
+                        </f:facet>
+                        <h:outputText value="#{participateEvent.date}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.sportEventParticipants}"/>
+                        </f:facet>
+                        <h:outputText value="#{participateEvent.participants.size()}/#{participateEvent.amountOfParticipants}"/>
+                    </p:column>
+                    <p:column>
+                        <p:spacer width="10px"/>
+                        <p:commandButton value="#{bundle.details}" icon="ui-icon-arrowstop-1-e"
+                                         action="#{sportEventMB.showDetails()}" ajax="false">
+                            <f:setPropertyActionListener target="#{sportEventMB.sportEvent}"
+                                                         value="#{participateEvent}"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

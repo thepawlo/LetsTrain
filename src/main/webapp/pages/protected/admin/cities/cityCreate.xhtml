@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <p:dialog widgetVar="cityCreateDialogWidget" id="cityCreateDialogId" height="150" width="500" modal="true"
+              closable="true" draggable="false" resizable="false">
+        <h:form id="cityCreateDialogForm" prependId="false">
+            <h:panelGrid columns="2">
+                <h:outputText value="#{bundle.cityName}" />
+                <h:inputText value="#{cityMB.city.name}" required="true" label="#{bundle.cityName}" validatorMessage="">
+                    <f:validateLength minimum="2" />
+                </h:inputText>
+
+                <p:commandButton value="#{bundle.create}" icon="ui-icon-plus" action="#{cityMB.createCity()}"
+                                 update=":messageGrowl :manageCitiesForm:manageCitiesTable" ajax="false"/>
+                <p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel" actionListener="#{cityMB.resetCity()}"
+                                 onclick="cityCreateDialogWidget.hide();" type="button" ajax="false"/>
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+</h:body>
+</html>

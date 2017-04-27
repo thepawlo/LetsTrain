@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+	<p:dialog widgetVar="loginWidget" id="loginWidgetId" width="500" modal="true" closable="false"
+			  draggable="false" resizable="false">
+	<h:form id="loginForm">
+		<h:panelGrid columns="2">
+			<h:outputLabel value="#{bundle.loginUserName}" />
+			<h:inputText value="#{loginMB.login}" label="Login" id="login" required="true">
+				<f:validateLength minimum="4" />
+			</h:inputText>
+			<h:outputLabel value="#{bundle.loginPassword}" />
+			<h:inputSecret value="#{loginMB.password}" label="Password" id="senha" required="true" autocomplete="off" >
+				<f:validateLength minimum="4" />
+			</h:inputSecret>
+			<p:commandButton value="#{bundle.login}" icon="ui-icon-plus"
+							 action="#{loginMB.login()}" ajax="false" update=""/>
+			<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel" actionListener="#{loginMB.resetUser()}"
+							 onclick="loginWidget.hide();" type="button" />
+		</h:panelGrid>
+	</h:form>
+	</p:dialog>
+</h:body>
+</html>

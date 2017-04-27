@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+    <ui:composition template="/pages/templates/master.xhtml">
+        <ui:define name="divMain">
+            <h:form id="manageCitiesForm">
+                <br/>
+                <p:dataTable id="manageCitiesTable" value="#{cityMB.allCities}" var="city" emptyMessage="#{bundle.noRecords}">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.cities}"/>
+                        </f:facet>
+                        <h:outputText value="#{city.name}"/>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="#{bundle.delete}" icon="ui-icon-trash" update=":cityDeleteDialogForm"
+                                         onclick="cityDeleteDialogWidget.show();" >
+                            <f:setPropertyActionListener target="#{cityMB.city}" value="#{city}" />
+                        </p:commandButton>
+                        <p:spacer width="10px" />
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton value="#{bundle.newCity}" icon="ui-icon-plus" update=":cityCreateDialogForm"
+                                 onclick="cityCreateDialogWidget.show();" />
+            </h:form>
+            <ui:include src="/pages/protected/admin/cities/cityCreate.xhtml"/>
+            <ui:include src="/pages/protected/admin/cities/cityDelete.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+
+</h:body>
+</html>
