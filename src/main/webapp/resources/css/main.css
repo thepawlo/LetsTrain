@@ -1,0 +1,42 @@
+.menuButton{
+	font-weight: bold;
+	font-size: 23px;
+	top:10px;
+	bottom: 10px;
+}
+
+#divLeft {
+	padding: 0;
+	padding-left: 10px;
+    text-align: center;
+	margin: 0;
+	position: absolute;
+    top:0px;
+	left: 10px;
+	bottom: 20px;
+	overflow: auto;
+	width: 250px;
+	border: thin solid lightGray;
+	background: #eeeeee;
+	font-size: 35px;
+}
+
+#divMain {
+	padding: 0;
+	padding-top: 10px;
+	margin: 0;
+	position: absolute;
+    top:0px;
+	left: 280px;
+	right: 20px;
+	bottom: 20px;
+	overflow: auto;
+	border: thin solid lightGray;
+	background: #fefeef;
+}
+
+#divWelcome {
+    margin: 10% 42%;
+    text-align: center;
+
+}
